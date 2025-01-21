@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/open-notebook-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/open-notebook-{{ version }}.tar.gz
   sha256: ca7fcdf5377a24028977ae4a06604d5fa403d6bfe1145cd207d83609a4867d8b
 
 build:
@@ -15,16 +15,16 @@ build:
     - nopen = open_notebook.cli:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools >=61.2
     - setuptools-scm >=8.0
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - tomli
     - typing-extensions
 
@@ -37,6 +37,7 @@ test:
     - nopen --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/usnistgov/open-notebook
