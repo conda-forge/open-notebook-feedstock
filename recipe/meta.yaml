@@ -1,32 +1,34 @@
 {% set name = "open-notebook" %}
-{% set version = "0.1.0" %}
+{% set version = "0.2.0" %}
+{% set python_min = "3.8" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/open-notebook-{{ version }}.tar.gz
-  sha256: ca7fcdf5377a24028977ae4a06604d5fa403d6bfe1145cd207d83609a4867d8b
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/open_notebook-{{ version }}.tar.gz
+  sha256: 6083ab9b8df6b4ff2d4e0528b752e40186b93e443efc1a6fbe458c79199c6d8f
 
 build:
   entry_points:
-    - open-notebook = open_notebook.cli:main
     - nopen = open_notebook.cli:main
+    - open-notebook = open_notebook.cli:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
 
 requirements:
   host:
     - python {{ python_min }}
-    - setuptools >=61.2
-    - setuptools-scm >=8.0
+    - hatch-fancy-pypi-readme
+    - hatch-vcs
+    - hatchling
     - pip
   run:
     - python >={{ python_min }}
     - tomli
-    - typing-extensions
+    - typing_extensions
 
 test:
   imports:
